@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste acteurs</title>
+
+    <style>
+
+
+        body{
+            font-family: sans-serif;
+        }
+        #acteur{
+            display:flex;
+            flex-direction: row;
+            
+        }
+
+        #photo img{
+            overflow:hidden;
+            -webkit-border-radius:50px;
+            -moz-border-radius:50px;
+            border-radius:50px;
+            width:90px;
+            height:90px;
+
+        }
+
+       
+        #date img{
+            height:20px;
+            vertical-align: text-bottom;
+        }
+
+        #infos{
+            margin-left:30px;
+            
+            
+        }
+
+        #infos div{
+            padding-top:5px;
+        }
+
+        #nom{
+            font-size:1.5em;
+            font-weight: bold;
+        }
+
+        #nb{
+            border-radius:50px;
+            background-color: #FFD633;
+            
+        }
+
+        .date{
+            padding-left:5px;
+        }
+
+        #affiche{
+            margin-top:50px;
+            display:flex;
+            flex-direction:row;
+            
+        }
+        
+        #titre_film{
+            font-size:1.5em;
+            font-weight: bold;
+        }
+
+        #carac_film{
+            margin-left:20px;
+            
+        }
+
+        #data{
+            margin-top:10px;
+        }
+        #data div{
+            padding-top:5px;
+        }
+
+        
+
+        #boutons p{
+            display:inline-block;
+            background-color: #fecc00;
+            text-transform: uppercase;
+            padding:0.5rem 1rem;
+            line-height: 1rem;
+            border-radius:2px;
+            letter-spacing:1px;
+            cursor:pointer;
+            margin-top: 1.25rem;
+            margin-right:0.625rem;
+            
+        }
+
+        #boutons p:hover{
+            background-color: #eabb00;
+        }
+        
+        
+        
+    </style>
+</head>
+<body>
+    <template id="templateActeur">
+        <div id="acteur">
+            <div id="photo">
+                <img id="photo_acteur" src="https://workshop.neotechweb.net/ws/ciamovie/1.0.0/acteurs/1.jpg"></img>
+                
+            </div>
+
+            <div id="infos">
+                <div id="nom">
+                    Sylverster Stalone
+                </div>
+                <div id="date">
+                    <img src="https://workshop.neotechweb.net/ws/flags/64/us.png" /><span class="date">8 Octobre 1949</span>
+                </div>
+                <div id="nb_films">
+                    <span id="nb">58</span> films
+                </div>
+            </div>
+        </div>
+    </template>
+
+
+    <template id="templateFilm">
+        <div id="affiche">
+            
+            <img id="img_film" src="https://workshop.neotechweb.net/ws/ciamovie/1.0.0/acteurs/1.jpg"></img>
+            
+            <div id="carac_film">
+                <div id="titre_film">
+                    Gremlins
+                </div>
+
+                <div id="data">
+                    <div id="date_duree_style">
+                        5 décembre 1984 / 1h45 / Comédie Fantastique
+                    </div>
+                    <div id="realisateur">
+                        De Joe Dante
+                    </div>
+                    <div id="acteurs">
+                        Avec Zach Galligan, Phoebe Cates, Hoyt Axton
+                    </div>
+                    
+                </div>
+
+
+                <div id="boutons">
+                    <p id="seance">SEANCE</p>
+                    <p id="vod">VOD</p>
+                </div>
+
+                <div id="note">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="90" height="20">
+                        <defs>
+                            <symbol id="star" viewbox="0 0 300 275">
+                                <polygon stroke-width="10" points="150,25 179,111 269,111
+                                197,165 223,251 150,200
+                                77,251 103,165 31,111 121,111"></polygon>
+
+                            </symbol>
+
+                            <symbol id="stars">
+                                <use href="#star" width="20" height="20" />
+                                <use href="#star" x="18" width="20" height="20" />
+                                <use href="#star" x="36" width="20" height="20" />
+                                <use href="#star" x="54" width="20" height="20" />
+                                <use href="#star" x="72" width="20" height="20" />
+
+                            </symbol>
+
+                            <clipPath id="film5654">
+                                <rect width="50" height="20"></rect>
+                            </clipPath>
+                        </defs>
+
+                        <use href="#stars"></use>
+                        <use href="#stars" fill="#fecc00" stroke="#fecc00" clip-path="url(#film5654)" ></use>
+
+                    </svg>
+                </div>
+            </div>
+
+
+
+        </div>
+    </template>
+    <div id="container">
+        
+
+        
+        
+        
+    </div>
+
+    <script>
+
+        async function getActeurs(){
+            let data = await fetch("https://workshop.neotechweb.net/ws/ciamovie/1.0.0/acteurs.php");
+            let datajson = await data.json();
+
+            let template = document.getElementById('templateActeur');
+
+            datajson.forEach(acteur => {
+                let content = template.content.cloneNode(true);
+                content.querySelector("#nom").innerText = acteur.Nom;
+                content.querySelector('#photo_acteur').setAttribute('src', 'https://workshop.neotechweb.net/ws/ciamovie/1.0.0/acteurs/' + acteur.idActeur + ".jpg");
+                document.body.appendChild(content);
+            });
+        }
+
+        getActeurs();
+
+
+        async function getFilms(){
+            let data = await fetch("https://workshop.neotechweb.net/ws/ciamovie/1.0.0/films.php");
+            let datajson = await data.json();
+            let template = document.getElementById('templateFilm');
+
+
+            datajson.forEach(film => {
+                let content = template.content.cloneNode(true);
+                content.querySelector("#titre_film").innerText = film.Titre;
+                content.querySelector('#img_film').setAttribute('src', `https://workshop.neotechweb.net/ws/ciamovie/1.0.0/films/${film.Fichier}` );
+                document.body.appendChild(content);
+            });
+
+           
+        }
+        getFilms();
+
+       
+        
+
+    </script>
+    
+</body>
+</html>
