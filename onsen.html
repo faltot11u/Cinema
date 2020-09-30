@@ -8,8 +8,58 @@
 
 </head>
 <body>
-    <ons-page>
-        hello
-    </ons-page>
+    <ons-navigator swipeable id="myNavigator" page="page1.html"> </ons-navigator>
+
+    <template id="page1.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="center">
+                    Ciao Movie
+                </div>
+            </ons-toolbar>
+    
+            <ons-list>
+                <ons-list-item modifier="chevron" class="acteur">
+                    Acteur 1
+                </ons-list-item>
+                <ons-list-item modifier="chevron" class="acteur">
+                    Acteur 2
+                </ons-list-item>
+            </ons-list>
+    
+        </ons-page>
+    
+        
+    </template>
+
+    <template id="page2.html">
+        <ons-page>
+            <ons-list>
+                <ons-list-item >
+                    Film 1
+                </ons-list-item>
+                <ons-list-item >
+                    Film 2
+                </ons-list-item>
+            </ons-list>
+        </ons-page>
+    </template>
+
+    <script>
+        document.addEventListener('init', function(event){
+            var page = event.target;
+
+            if(page.id == 'page1.html'){
+                page.querySelector(".acteur div").addEventListener("touchstart", function(evt){
+                    page.querySelector("#myNavigator").pushPage('page2.html', {data: {}})
+                })
+            }
+        })
+    </script>
+    
+
+    
+
+
 </body>
 </html>
