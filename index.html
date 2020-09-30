@@ -142,6 +142,17 @@
     
         
     <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, 
+                function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        } 
+
         async function getActeurs() {
             let data = await fetch("https://workshop.neotechweb.net/ws/ciamovie/1.0.0/acteurs.php");
             let datajson = await data.json();
