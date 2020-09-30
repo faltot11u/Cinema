@@ -6,8 +6,11 @@ self.addEventListener('install', function(event) {
             return cache.addAll(
                 [
                     'index.html',
-                    'style.css',
-                    'site.js',
+                    'manifest.json',
+                    'worker.js',
+                    'images/cinema128x128.png',
+                    'images/cinema144.144.png',
+                    'images/images.jfif'
                 ]
             );
         })
